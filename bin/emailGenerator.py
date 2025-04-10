@@ -22,7 +22,7 @@ class Generator:
         'Sep': 'Settembre',
         'Oct': 'Ottobre',
         'Nov': 'Novembre',
-        'Dec': 'December'
+        'Dec': 'Dicembre'
     }
         self.saveFile()
     
@@ -31,17 +31,17 @@ class Generator:
         msg = self.rawMessage
         
         date = msg['date']
-        if date.endswith('(CET)'):
-            date = date[:-6]
-        date = datetime.strptime(date, "%a, %d %b %Y %H:%M:%S %z")
+        if date[:3] in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']:
+            date = date[5:]
+        date = datetime.strptime(date[:19], "%d %b %Y %H:%M:%S")
         dateName = date.strftime("%d-%m-%Y")
         sender = msg['from']
         receiver = msg['to']
-        if len(receiver.split(',')) > 1:
+        if receiver and len(receiver.split(',')) > 1:
             receiver = receiver.split(',')[0]
         
-        sender = self._cleanup(sender)
-        receiver = self._cleanup(receiver)
+        sender = self._cleanup(sender) if sender else ''
+        receiver = self._cleanup(receiver) if receiver else ''
             
         filename = f"{dateName} {sender} {receiver}"
         thisMonth = self.monthTranslator[date.strftime("%b")]
