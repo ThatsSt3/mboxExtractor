@@ -11,11 +11,15 @@ def main():
     args = parser.parse_args()
     
     try:
-        path = os.path.abspath(args['MBOXinputFilename'])
+        path = os.path.abspath(args.MBOXinputFilename)
     except:
         print('MBOX file not found')
+        exit(1)
     
     e = Extractor(path)
+    
+    
+    e.analyzeEmails()
 
 
 
