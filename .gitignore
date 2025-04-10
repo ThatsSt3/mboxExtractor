@@ -2,3 +2,4 @@
 example/*
 bin/__*
 Output/*
+.venv/*

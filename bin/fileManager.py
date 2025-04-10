@@ -19,13 +19,8 @@ class Extractor:
     
     def analyzeEmails(self):
         for i, email in enumerate(self.mbox):
-            filename = self._getFileName(i + 1)
-            filename +='.eml'
-            Generator(email, self.path, filename)
-    
-    def _getFileName(self, n: int) -> tuple[str, str]:
-        return '0'*(int(log10(self.mbox.keys()[-1] + 1)) - int(log10(n))) + str(n)
-        
+            Generator(email, self.path)
+            
     
     def _createOutputFolder(self, path: str, folderName: str) -> str:
         newPath = path + '\\' + folderName
