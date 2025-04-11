@@ -1,7 +1,7 @@
 import mailbox
 import os
 import shutil
-from math import log10
+from alive_progress import alive_bar
 from bin.emailGenerator import Generator
 
 class Extractor:
@@ -18,8 +18,10 @@ class Extractor:
         self.path = self._createOutputFolder(path_back, folderName)
     
     def analyzeEmails(self):
-        for i, email in enumerate(self.mbox):
-            Generator(email, self.path)
+        with alive_bar(self.mbox.keys()[-1] + 1) as b:
+            for i, email in enumerate(self.mbox):
+                Generator(email, self.path)
+                b()
             
     
     def _createOutputFolder(self, path: str, folderName: str) -> str:
