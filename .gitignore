@@ -3,3 +3,6 @@ example/*
 bin/__*
 Output/*
 .venv/*
+dist/*
+build/*
+MBOXFileExtractor.spe*
