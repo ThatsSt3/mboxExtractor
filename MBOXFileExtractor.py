@@ -1,25 +1,20 @@
-import argparse
 import os
+from appJar import gui
 from bin.fileManager import Extractor
+from bin.uiFunctions import Application
+
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="MBOX file content extractor", description="Extracts text and attachments from emails in MBOX file")
-    parser.add_argument('MBOXinputFilename', help="MBOX input file")
-    parser.add_argument('-v', '--verbose', help="Verbose output", action='store_true')
-    
-    args = parser.parse_args()
-    
-    try:
-        path = os.path.abspath(args.MBOXinputFilename)
-    except:
-        print('MBOX file not found')
-        exit(1)
-    
-    e = Extractor(path)
+
+    a = Application()
     
     
-    e.analyzeEmails()
+    
+    # e = Extractor(path)
+    
+    
+    # e.analyzeEmails()
 
 
 

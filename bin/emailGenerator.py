@@ -24,9 +24,8 @@ class Generator:
         'Nov': 'Novembre',
         'Dec': 'Dicembre'
     }
-        self.saveFile()
     
-    def saveFile(self):
+    def saveFile(self) -> str:
         
         msg = self.rawMessage
         
@@ -58,6 +57,8 @@ class Generator:
         with open(target, 'w') as f:
             gen = generator.Generator(f)
             gen.flatten(msg)
+        
+        return filename + '.eml'
     
     
     def _cleanup(self, s: str) -> str:

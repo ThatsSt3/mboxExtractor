@@ -1,10 +1,12 @@
 import mailbox
 import os
 import shutil
-from alive_progress import alive_bar
+from collections.abc import Iterator
 from bin.emailGenerator import Generator
+from bin.progress import Progress
 
 class Extractor:
+    
     
     def __init__(self, path: str, folderName: str = 'Output'):
         try:
@@ -17,11 +19,10 @@ class Extractor:
         
         self.path = self._createOutputFolder(path_back, folderName)
     
-    def analyzeEmails(self):
-        with alive_bar(self.mbox.keys()[-1] + 1) as b:
-            for i, email in enumerate(self.mbox):
-                Generator(email, self.path)
-                b()
+    def analyzeEmails(self) -> Iterator[Progress]:
+        for i, email in enumerate(self.mbox):
+            yield Progress(i + 1, self.mbox.keys()[-1] + 1, Generator(email, self.path).saveFile())
+
             
     
     def _createOutputFolder(self, path: str, folderName: str) -> str:
