@@ -1,4 +1,4 @@
-import os
+import os, sys
 from appJar import gui
 from bin.fileManager import Extractor
 
@@ -17,13 +17,12 @@ class Application(gui):
         self.extractingFile = ''
 
         
-        self.setIcon(os.path.abspath("images/icon.ico"))
+        self.setIcon(self._resource_path("icon.ico"))
 
         self.setFont(16)        
         self.showSplash("MBOX File Extractor", fill=self.mainColour, stripe=self.secondColour, fg="white", font=44)
         
-        self.setBg(self.mainColour)
-        
+        self.setBg(self.mainColour)      
         
 
         
@@ -33,7 +32,13 @@ class Application(gui):
         self.go()
         
         
-    
+    def _resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath('.')
+        finally:
+            return os.path.join(base_path, relative_path)
     
     def _inputFileFrame(self):
         self.startLabelFrame("Seleziona file di input", colspan=1)
