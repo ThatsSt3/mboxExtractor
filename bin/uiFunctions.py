@@ -15,12 +15,14 @@ class Application(gui):
         self.mainColour = 'lightblue'
         self.secondColour = 'black'
         self.extractingFile = ''
-    
+
+        
+        self.setIcon(os.path.abspath("images/icon.ico"))
+
         self.setFont(16)        
         self.showSplash("MBOX File Extractor", fill=self.mainColour, stripe=self.secondColour, fg="white", font=44)
         
         self.setBg(self.mainColour)
-        
         
         
 
