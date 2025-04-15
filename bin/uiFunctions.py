@@ -1,7 +1,7 @@
 import os
 from appJar import gui
 from bin.fileManager import Extractor
-from bin.progress import Progress
+
 
 
 
@@ -22,11 +22,10 @@ class Application(gui):
         self.setBg(self.mainColour)
         
         
-        self.initExtractingWindow()
         
 
         
-        self.inputFileFrame()
+        self._inputFileFrame()
         
         
         self.go()
@@ -34,13 +33,13 @@ class Application(gui):
         
     
     
-    def inputFileFrame(self):
+    def _inputFileFrame(self):
         self.startLabelFrame("Seleziona file di input", colspan=1)
         self.addLabel("l1", "Percorso file:", row=0)
         self.addFileEntry("inputPath", row=0, column=1)
-        self.addButton("Estrai", self.extractEmail, row=0, column=2)
+        self.addButton("Estrai", self._extractEmail, row=0, column=2)
     
-    def extractEmail(self, btn):
+    def _extractEmail(self, btn):
         if btn == 'Estrai':
             path = self.getEntry("inputPath")
             if os.path.exists(path) and path.endswith('.mbox'):
@@ -49,10 +48,8 @@ class Application(gui):
                 path = os.path.abspath(path)
                 e = Extractor(path)
                 
-                self.showSubWindow("extractionPage")
                 
-                self.thread(self.analyzer, e)
-                self.hideSubWindow("extractionPage")                
+                self._analyzer(e)             
                 
                 self.popUp("procComplete", "Estrazione email completata")
                 self.clearEntry("inputPath")
@@ -61,22 +58,11 @@ class Application(gui):
                 self.errorBox("File non valido", "Il percorso selezionato non porta a un file MBOX valido")
     
     
-    def analyzer(self, e: Extractor):
-        self.openSubWindow("extractionPage")
-        
-        
+    def _analyzer(self, e: Extractor):
         for email in e.analyzeEmails():
-            self.extractingFile = email.filename
-            self.queueFunction(self.setLabel, "fileInProgress", f"Extracting: {self.extractingFile}")
-        
-        self.extractingFile = ''
+            pass
     
-    def initExtractingWindow(self):
-        self.startSubWindow("extractionPage")
-        self.setSize("800x600")
-        self.label("fileInProgress", "Extracting: ")
-        self.setBg(self.mainColour)
-        self.stopSubWindow()
+
         
         
     
